@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>jQuery / jqLite ColorPicker ByGiro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      @media (max-width: 767px) {
+        .affix {
+          position: static;
+        }
+      }
+      @media (min-width: 768px) and (max-width: 979px) {
+        .form-horizontal .control-label {
+          width: 80px;
+        }
+        .form-horizontal .controls {
+          margin-left: 100px;
+        }
+      }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+			<h1>jQuery / jqLite: ColorPicker ByGiro</h1>
+			<p>jQuery / jqLite plugin to build a lightweight colorpicker</p>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="input-group myColorPicker">
+					  <span class="input-group-addon myColorPicker-preview">&nbsp;</span>
+					  <input type="text" class="form-control">
+					</div>
+				</div>
+				<div class="span6">
+				</div>
+			</div><!--/span-->
+		</div><!--/span-->
+    </div><!--/.fluid-container-->
+	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+	<link href="../dist/jquery.colorpicker.bygiro.min.css" rel="stylesheet">
+    <script src="../dist/jquery.colorpicker.bygiro.min.js"></script>
+
+	<script>
+		$('.myColorPicker').colorPickerByGiro({
+			preview: '.myColorPicker-preview'
+		});
+	</script>
+</body>
+</html>

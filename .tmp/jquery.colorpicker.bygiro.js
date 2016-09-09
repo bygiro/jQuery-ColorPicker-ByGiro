@@ -257,7 +257,7 @@ if(!bg){
             that.$element = $element;
             that.settings = $.extend({}, {
 				
-				preview: '', // a valid CSS selector
+				preview: '', // a valid CSS selector / a DOM element / a jQuery-jqLite collection
 				showPicker: true,
 
 				format: 'rgb',
@@ -274,8 +274,9 @@ if(!bg){
 			var rgb,opts = that.settings;
 			
 			opts.format = opts.format.toLowerCase();
-			opts.preview = (opts.preview && opts.preview) != '' ? opts.preview : false;
+			opts.preview = opts.preview.length ? opts.preview : false;
 			
+			if(!(opts.preview instanceof $)) opts.preview = $(opts.preview);
 			
 			// let's find the input
 			that.$eleInput = that.$element.find('input');

@@ -1,19 +1,34 @@
+/*!
+ * jQuery / jqLite colorPicker ByGiro
+ *
+ * version 0.0.2
+ * Copyright August 2016, G. Tomaselli
+ * Licensed under the MIT license.
+ *
+ */
+
+.cp-cont {
+	position: relative;
+}
+
 .cpBG {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 13px;
     width: 280px;
 	box-shadow: 3px 3px 5px #888888;
-    margin-left: 15px;
-    margin-top: 5px;
+	left: 10px;
+	position: absolute;
+	background: #fff;
+	z-index: 10;
 }
 
-.fade {
+.cp-cont .fade {
 	opacity: 0;
 	transition: opacity 0.15s linear 0s;
 }
 
-.fade.in {
+.cp-cont .fade.in {
     opacity: 1;
 }
 

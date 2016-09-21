@@ -1,6 +1,7 @@
 /*!
  * jQuery / jqLite colorPicker ByGiro
  *
+ * version 0.0.2
  * Copyright August 2016, G. Tomaselli
  * Licensed under the MIT license.
  *
@@ -16,51 +17,37 @@ if(!bg){
 		bg = angular.element;
 		bg.extend = angular.extend;	
 	
-		function selectResult(elem, selector){
-			if (elem.length == 1)
-				return elem[0].querySelectorAll(selector);
-			else {
-				var matches = [];
-				for(var i=0;i<elem.length;i++){
-					var elm = elem[i];
-					var nodes = angular.element(elm.querySelectorAll(selector));
-					matches.push.apply(matches, nodes.slice());					
-				}
-				return matches;
-
+		
+		bg.prototype.slideUp = $.prototype.hide = function(){
+			var i,that = this;
+			for(i=0;i<that.length;i++){
+				that[i].style.display = 'none';
 			}
+			return that;
+		}
+		
+		bg.prototype.slideDown = $.prototype.show = function(){
+			var i,that = this;
+			for(i=0;i<that.length;i++){
+				that[i].style.display = '';
+			}
+			return that;
+		}
 
-		}	
-
-		bg.prototype.find = function (selector){			
-			var context = this[0];
+		bg.prototype.find = function (selector){
+			var context = this[0],matches = [];
 			// Early return if context is not an element or document
-			if (!context || (context.nodeType !== 1 && context.nodeType !== 9) || !angular.isString(selector)) {
+			if (!context || (context.nodeType !== 1 && context.nodeType !== 9) || typeof selector != 'string') {
 				return [];
 			}
-			var matches = [];
-			if (selector.charAt(0) === '>')
-				selector = ':scope ' + selector;
-			if (selector.indexOf(':visible') > -1) {
-				var elems = angular.element(selectResult(this, selector.split(':visible')[0]))
-
-				forEach(elems, function (val, i) {
-					if (angular.element(val).is(':visible'))
-						matches.push(val);
-				})
-
-			} else {
-				matches = selectResult(this, selector)
+			
+			for(var i=0;i<this.length;i++){
+				var elm = this[i],
+				nodes = bg(elm.querySelectorAll(selector));
+				matches.push.apply(matches, nodes.slice());
 			}
-
-			if (matches.length) {
-				if (matches.length == 1)
-					return angular.element(matches[0])
-				else {
-					return angular.element(matches);
-				}
-			}
-			return angular.element();
+			
+			return bg(matches);
 		};
 	}
 }
@@ -233,18 +220,19 @@ if(!bg){
 			}, 350, 'h');
 		});
 		
+		cpBG.slideUp();
 		that.$main.find('.cp-buttons .btn-close').on('click',function(){
-			cpBG.removeClass('in');
+			cpBG.slideUp().removeClass('in');
 		});
 		
 		that.$main.find('.cp-buttons .btn-none').on('click',function(){
 			that.setValue({h:0, s:0, v:1, a:0});
-			that.$eleInput.val('');
+			that.$eleInput.val('').triggerHandler('input');
 			that.$main.find('input').val('');
 		});
 		
 		openPicker = function(){
-			cpBG.addClass('in');
+			cpBG.addClass('in').slideDown();
 		}
 		that.$eleInput.on('focus',openPicker);		
 		that.$element.on('click',openPicker);
@@ -275,8 +263,6 @@ if(!bg){
 			
 			opts.format = opts.format.toLowerCase();
 			opts.preview = opts.preview.length ? opts.preview : false;
-			
-			if(!(opts.preview instanceof $)) opts.preview = $(opts.preview);
 			
 			// let's find the input
 			that.$eleInput = that.$element.find('input');
@@ -348,10 +334,11 @@ if(!bg){
 			}		
 			
 			// set current Value in input
-			that.$eleInput.val(inputVal);
+			that.$eleInput.val(inputVal).triggerHandler('input');
 			
 			// and the preview
-			if(opts.preview) $(opts.preview).css('background-color', previewColor);
+			if(opts.preview) (opts.preview instanceof $ ? opts.preview : that.$element.find(opts.preview)).css('background-color', previewColor);
+
 
 			// set hexadecimal
 			that.$main.find('.cp-values .cp-hex input').val(hex);
